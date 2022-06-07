@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getJwtToken, getRefreshToken, deleteJwtToken } from '.';
-import { deleteRefreshToken } from './storage';
+import { deleteRefreshToken, logout } from './storage';
 axios.defaults.withCredentials = true;
 
 const axiosManager = async (url, method, data = {}) => {
@@ -34,8 +34,7 @@ const axiosManager = async (url, method, data = {}) => {
     if (error.response.status == 404) alert('페이지를 찾을 수 없음');
     if (error.response.status == 401) {
       alert('토큰만료');
-      deleteJwtToken();
-      deleteRefreshToken();
+      logout();
     }
     err = error;
   }
